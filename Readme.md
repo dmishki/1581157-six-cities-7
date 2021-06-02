@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Дмитрий Шкируть](https://up.htmlacademy.ru/react/7/user/1581157).
-* Наставник: `Неизвестно`.
+* Наставник: [Jura Zubach](https://htmlacademy.ru/profile/id95078).
 
 ---
 
