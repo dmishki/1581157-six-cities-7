@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../header/header';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import FavoritesList from '../favorites-list/favorites-list';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
 
-function Favorites() {
+function Favorites(props) {
+  const { offers } = props;
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
     <div className="page page--favorites-empty">
@@ -10,13 +15,7 @@ function Favorites() {
 
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
-          <section className="favorites favorites--empty">
-            <h1 className="visually-hidden">Favorites (empty)</h1>
-            <div className="favorites__status-wrapper">
-              <b className="favorites__status">Nothing yet saved.</b>
-              <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
-            </div>
-          </section>
+          {favoriteOffers.length === 0 ? <FavoritesEmpty /> : <FavoritesList favoriteOffers={favoriteOffers} />}
         </div>
       </main>
       <footer className="footer">
@@ -27,5 +26,9 @@ function Favorites() {
     </div>
   );
 }
+
+Favorites.propTypes = {
+  offers: PropTypes.array,
+};
 
 export default Favorites;

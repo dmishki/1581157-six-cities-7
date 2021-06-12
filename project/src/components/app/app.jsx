@@ -9,22 +9,28 @@ import Room from '../room/room';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function App(props) {
-  const { itemsId } = props;
+  const { offers, reviews } = props;
+  const [firstOffer]  = offers;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <Main itemsId = {itemsId} />
+          <Main
+            offers={offers}
+          />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <Favorites />
+          <Favorites offers={offers} />
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <Room />
+          <Room
+            reviews={reviews}
+            offer = {firstOffer}
+          />
         </Route>
         <Route>
           <NotFoundPage />
@@ -35,7 +41,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  itemsId: PropTypes.number,
+  offers: PropTypes.array,
+  reviews: PropTypes.array,
 };
 
 export default App;
