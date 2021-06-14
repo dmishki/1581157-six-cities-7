@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -9,7 +9,6 @@ import Room from '../room/room';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function App(props) {
-  const [, setActiveCard] = useState();
   const { offers, reviews } = props;
 
   return (
@@ -18,7 +17,6 @@ function App(props) {
         <Route exact path={AppRoute.MAIN}>
           <Main
             offers={offers}
-            setActiveCard={setActiveCard}
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>

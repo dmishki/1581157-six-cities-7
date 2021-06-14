@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../header/header';
 import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
 
 function Main(props) {
-  const { setActiveCard, offers } = props;
+  const [, setActiveCard] = useState();
+  const { offers } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -86,7 +87,6 @@ function Main(props) {
 
 Main.propTypes = {
   offers: PropTypes.array,
-  setActiveCard: PropTypes.func,
 };
 
 export default Main;
