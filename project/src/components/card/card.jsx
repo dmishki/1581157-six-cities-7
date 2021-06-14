@@ -1,25 +1,30 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import cardProp from './card.prop';
-import { AppRoute } from '../../const';
+import { calculateRatingWidth } from '../../helpers';
 
 function Card(props) {
-  const { offer } = props;
+  const { setActiveCard, offer } = props;
   const { id,
     price,
     previewImage,
     type,
     isFavorite,
-    title } = offer;
+    title,
+    rating } = offer;
 
-  const history = useHistory();
+  const offerUrl = `/offer/${id}`;
+  const calculatedRatingWidth = calculateRatingWidth(rating);
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card"
+      onMouseEnter={() => setActiveCard(id)}
+    >
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href={`/offer/${id}`}>
+        <Link to={offerUrl}>
           <img className="place-card__image" src={previewImage} width="260" height="200" aria-hidden alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -36,12 +41,12 @@ function Card(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: calculatedRatingWidth}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link onClick={() => history.push(AppRoute.OFFER)}>{title}</Link>
+          <Link to={offerUrl}>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>
@@ -50,6 +55,7 @@ function Card(props) {
 }
 
 Card.propTypes = {
+  setActiveCard: PropTypes.func,
   offer: cardProp,
 };
 

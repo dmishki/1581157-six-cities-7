@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
 
 function Main(props) {
-  const { offers } = props;
+  const { setActiveCard, offers } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -68,7 +68,10 @@ function Main(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offers} />
+                <OffersList
+                  offers={offers}
+                  setActiveCard={setActiveCard}
+                />
               </div>
             </section>
             <div className="cities__right-section">
@@ -83,6 +86,7 @@ function Main(props) {
 
 Main.propTypes = {
   offers: PropTypes.array,
+  setActiveCard: PropTypes.func,
 };
 
 export default Main;

@@ -1,13 +1,20 @@
 import React from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import Header from '../header/header';
 import ProLabel from '../pro-label/pro-label';
 import PremiumLabel from '../premium-label/premium-label';
 import Reviews from '../reviews/reviews';
-import cardProp from '../card/card.prop';
 import PropTypes from 'prop-types';
+import { calculateRatingWidth } from '../../helpers';
 
 function Room(props) {
-  const { offer, reviews } = props;
+  const { id } = useParams();
+  const { offers = [], reviews } = props;
+  const offer = offers.find((item) => Number(item.id) === Number(id));
+  if (!offer) {
+    return <Redirect to='/not-found'/>;
+  }
+
   const { bedrooms,
     description,
     goods,
@@ -18,9 +25,11 @@ function Room(props) {
     maxAdults,
     price,
     title,
-    type } = offer;
+    type,
+    rating } = offer;
 
-  const {avatarUrl, isPro, name } = host;
+  const { avatarUrl, isPro, name } = host;
+  const calculatedRatingWidth = calculateRatingWidth(rating);
 
   return (
     <div className="page">
@@ -53,10 +62,10 @@ function Room(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{ width: calculatedRatingWidth}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
@@ -216,7 +225,7 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  offer: cardProp,
+  offers: PropTypes.array,
   reviews: PropTypes.array,
 };
 
