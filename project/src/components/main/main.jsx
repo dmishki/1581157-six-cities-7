@@ -1,10 +1,11 @@
-import React from 'react';
-import Card from '../card/card';
-import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import Header from '../header/header';
+import PropTypes from 'prop-types';
+import OffersList from '../offers-list/offers-list';
 
 function Main(props) {
-  const { itemsId } = props;
+  const [, setActiveCard] = useState();
+  const { offers } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -68,7 +69,10 @@ function Main(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {itemsId.map((id) => <Card key={id} />)};
+                <OffersList
+                  offers={offers}
+                  setActiveCard={setActiveCard}
+                />
               </div>
             </section>
             <div className="cities__right-section">
@@ -82,7 +86,7 @@ function Main(props) {
 }
 
 Main.propTypes = {
-  itemsId: PropTypes.number,
+  offers: PropTypes.array,
 };
 
 export default Main;
