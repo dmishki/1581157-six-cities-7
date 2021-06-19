@@ -5,7 +5,7 @@ import cardProp from './card.prop';
 import { calculateRatingWidth } from '../../helpers';
 
 function Card(props) {
-  const { setActiveCard, offer } = props;
+  const { activeCard, setActiveCard, offer } = props;
   const { id,
     price,
     previewImage,
@@ -18,7 +18,9 @@ function Card(props) {
   const calculatedRatingWidth = calculateRatingWidth(rating);
 
   const handleOnCardHover = () => {
-    setActiveCard(id);
+    if (id !== activeCard) {
+      setActiveCard(id);
+    }
   };
 
   return (
@@ -59,6 +61,7 @@ function Card(props) {
 }
 
 Card.propTypes = {
+  activeCard: PropTypes.number,
   setActiveCard: PropTypes.func,
   offer: cardProp,
 };

@@ -6,11 +6,11 @@ const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.370216,
-        'longitude': 4.895168,
-        'zoom': 10,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
+        'zoom': 12,
       },
-      'name': 'Hamburg',
+      'name': 'Amsterdam',
     },
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -24,8 +24,8 @@ const offers = [
     'isFavorite': false,
     'isPremium': true,
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 8,
     },
     'maxAdults': 4,
@@ -40,11 +40,11 @@ const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.370216,
-        'longitude': 4.895168,
-        'zoom': 10,
+        'latitude': 52.369553943508,
+        'longitude': 4.85309666406198,
+        'zoom': 12,
       },
-      'name': 'Hamburg',
+      'name': 'Amsterdam',
     },
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -58,8 +58,8 @@ const offers = [
     'isFavorite': true,
     'isPremium': false,
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.369553943508,
+      'longitude': 4.85309666406198,
       'zoom': 8,
     },
     'maxAdults': 4,
@@ -74,9 +74,9 @@ const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.370216,
-        'longitude': 4.895168,
-        'zoom': 10,
+        'latitude': 52.3909553943508,
+        'longitude': 4.929309666406198,
+        'zoom': 12,
       },
       'name': 'Amsterdam',
     },
@@ -92,8 +92,8 @@ const offers = [
     'isFavorite': true,
     'isPremium': false,
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3909553943508,
+      'longitude': 4.929309666406198,
       'zoom': 8,
     },
     'maxAdults': 4,
@@ -108,9 +108,9 @@ const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.370216,
-        'longitude': 4.895168,
-        'zoom': 10,
+        'latitude': 52.3809553943508,
+        'longitude': 4.939309666406198,
+        'zoom': 12,
       },
       'name': 'Amsterdam',
     },
@@ -126,8 +126,8 @@ const offers = [
     'isFavorite': true,
     'isPremium': false,
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
       'zoom': 8,
     },
     'maxAdults': 4,

@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import Header from '../header/header';
 import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
+import Map from '../map/map';
+import { City } from '../../const';
 
 function Main(props) {
-  const [, setActiveCard] = useState();
+  const [activeCard, setActiveCard] = useState(1);
   const { offers } = props;
 
   return (
@@ -71,12 +73,19 @@ function Main(props) {
               <div className="cities__places-list places__list tabs__content">
                 <OffersList
                   offers={offers}
+                  activeCard={activeCard}
                   setActiveCard={setActiveCard}
                 />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  offers={offers}
+                  activeCard={activeCard}
+                  city={City.AMSTERDAM}
+                />
+              </section>
             </div>
           </div>
         </div>
