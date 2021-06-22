@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import useMap from '../../hooks/useMap';
+import cityProp from '../props/city.prop';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -48,12 +49,7 @@ function Map(props) {
 Map.propTypes = {
   activeCard: PropTypes.number,
   offers: PropTypes.array,
-  city: PropTypes.shape({
-    name: PropTypes.string,
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
+  city: cityProp,
 };
 
 export default Map;
