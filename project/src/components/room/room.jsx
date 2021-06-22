@@ -8,10 +8,7 @@ import Map from '../map/map';
 import PropTypes from 'prop-types';
 import { calculateRatingWidth } from '../../helpers';
 import cityProp from '../props/city.prop';
-import withOffersList from '../../hocs/with-offers-list';
-import nearbyCard from '../nearby-card/nearby-card';
-
-const OffersNearbyListWrapped = withOffersList(nearbyCard);
+import OffersList from '../offers-list/offers-list';
 
 function Room(props) {
   const { id } = useParams();
@@ -135,7 +132,7 @@ function Room(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersNearbyListWrapped
+              <OffersList
                 offers={offersNearby}
                 activeCard={activeCard}
                 setActiveCard={setActiveCard}

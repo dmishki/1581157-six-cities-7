@@ -13,6 +13,7 @@ function useMap(mapRef, city) {
         zoom: zoom,
         zoomControl: false,
         marker: true,
+        scrollWheelZoom: false,
       });
       instance.setView([latitude, longitude], zoom);
 

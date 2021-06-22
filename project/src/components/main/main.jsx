@@ -3,10 +3,7 @@ import Header from '../header/header';
 import PropTypes from 'prop-types';
 import Map from '../map/map';
 import cityProp from '../props/city.prop';
-import Card from '../card/card';
-import withOffersList from '../../hocs/with-offers-list';
-
-const OffersListWrapped = withOffersList(Card);
+import OffersList from '../offers-list/offers-list';
 
 function Main(props) {
   const { setActiveCard, activeCard, city, offers } = props;
@@ -73,7 +70,7 @@ function Main(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersListWrapped
+                <OffersList
                   offers={offers}
                   activeCard={activeCard}
                   setActiveCard={setActiveCard}

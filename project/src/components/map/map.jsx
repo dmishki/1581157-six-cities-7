@@ -24,7 +24,11 @@ function Map(props) {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
+
     if (map) {
+      markers.addTo(map);
+
       offers.forEach((offer) => {
         const { latitude, longitude } = offer.city.location;
         const offerCords = [latitude, longitude];
@@ -36,9 +40,18 @@ function Map(props) {
                 ? currentCustomIcon
                 : defaultCustomIcon,
             })
-          .addTo(map);
+          .addTo(markers);
       });
+
+      map.flyTo(
+        [offers[0].city.location.latitude, offers[0].city.location.longitude],
+        offers[0].city.location.zoom,
+      );
     }
+
+    return () => {
+      markers.clearLayers();
+    };
   }, [map, offers, activeCard]);
 
   return (
