@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Header from '../header/header';
 import PropTypes from 'prop-types';
+import Map from '../map/map';
+import cityProp from '../props/city.prop';
 import OffersList from '../offers-list/offers-list';
 
 function Main(props) {
-  const [, setActiveCard] = useState();
-  const { offers } = props;
+  const { setActiveCard, activeCard, city, offers } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -71,12 +72,19 @@ function Main(props) {
               <div className="cities__places-list places__list tabs__content">
                 <OffersList
                   offers={offers}
+                  activeCard={activeCard}
                   setActiveCard={setActiveCard}
                 />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  offers={offers}
+                  activeCard={activeCard}
+                  city={city}
+                />
+              </section>
             </div>
           </div>
         </div>
@@ -86,6 +94,9 @@ function Main(props) {
 }
 
 Main.propTypes = {
+  activeCard: PropTypes.number,
+  setActiveCard: PropTypes.func,
+  city: cityProp,
   offers: PropTypes.array,
 };
 
