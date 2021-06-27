@@ -6,9 +6,38 @@ export const AppRoute = {
 };
 
 export const City = {
-  HAMBURG: 'Hamburg',
+  PARIS:  {
+    name: 'Paris',
+    latitude: 48.856663,
+    longitude: 2.351556,
+    zoom: 12,
+  },
+  COLOGNE:  {
+    name: 'Cologne',
+    latitude: 52.38333,
+    longitude: 4.9,
+    zoom: 12,
+  },
+  BRUSSELS: {
+    name: 'Brussels',
+    latitude: 52.38333,
+    longitude: 4.9,
+    zoom: 12,
+  },
   AMSTERDAM: {
     name: 'Amsterdam',
+    latitude: 52.38333,
+    longitude: 4.9,
+    zoom: 12,
+  },
+  HAMBURG: {
+    name: 'Hamburg',
+    latitude: 52.38333,
+    longitude: 4.9,
+    zoom: 12,
+  },
+  DUSSELDORF: {
+    name: 'Dusseldorf',
     latitude: 52.38333,
     longitude: 4.9,
     zoom: 12,

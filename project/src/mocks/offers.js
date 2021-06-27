@@ -40,11 +40,11 @@ const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.369553943508,
-        'longitude': 4.85309666406198,
+        'latitude': 48.866246,
+        'longitude': 2.337760,
         'zoom': 12,
       },
-      'name': 'Amsterdam',
+      'name': 'Paris',
     },
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -108,11 +108,11 @@ const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.3809553943508,
-        'longitude': 4.939309666406198,
+        'latitude': 48.853810,
+        'longitude': 2.339096,
         'zoom': 12,
       },
-      'name': 'Amsterdam',
+      'name': 'Paris',
     },
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
