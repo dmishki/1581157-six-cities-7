@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import cityProp from '../props/city.prop';
 
 function CityItem(props) {
-  const { city, stateCity, cityChange } = props;
+  const { city, stateCity, changeCity } = props;
 
   return (
     <li className="locations__item">
       <Link className={ city === stateCity ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item' } to="/"
         onClick={() => {
-          cityChange(city);
+          changeCity(city);
         }}
       >
         <span>{city.name}</span>
@@ -22,7 +22,7 @@ function CityItem(props) {
 CityItem.propTypes = {
   stateCity: cityProp,
   city: cityProp,
-  cityChange: PropTypes.func.isRequired,
+  changeCity: PropTypes.func.isRequired,
 };
 
 export default CityItem;

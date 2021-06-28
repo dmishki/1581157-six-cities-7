@@ -9,7 +9,7 @@ import MainWithOffers from '../main-with-offers/main-with-offers';
 import MainEmpty from '../main-empty/main-empty';
 
 function Main(props) {
-  const { setActiveCard, activeCard, offers, stateCity, cityChange } = props;
+  const { setActiveCard, activeCard, offers, stateCity, changeCity } = props;
 
   const activeOffers = offers.filter((offer) => offer.city.name === stateCity.name);
 
@@ -22,7 +22,7 @@ function Main(props) {
           <section className="locations container">
             <CitiesList
               stateCity={stateCity}
-              cityChange={cityChange}
+              changeCity={changeCity}
             />
           </section>
         </div>
@@ -43,12 +43,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  cityChange: ActionCreator.cityChange,
+  changeCity: ActionCreator.changeCity,
 };
 
 Main.propTypes = {
   stateCity: cityProp,
-  cityChange: PropTypes.func.isRequired,
+  changeCity: PropTypes.func.isRequired,
   activeCard: PropTypes.number,
   setActiveCard: PropTypes.func,
   offers: PropTypes.array,

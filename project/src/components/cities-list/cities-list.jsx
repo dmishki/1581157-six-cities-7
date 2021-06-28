@@ -5,20 +5,20 @@ import CityItem from '../city-item/city-item';
 import cityProp from '../props/city.prop';
 
 function CitiesList(props) {
-  const { stateCity, cityChange } = props;
+  const { stateCity, changeCity } = props;
 
   const cities = Object.entries(City).map((city) => city.find((item) => item.name));
 
   return (
     <ul className="locations__list tabs__list">
-      {cities.map((city) => <CityItem key={city.name} stateCity={stateCity} city={city} cityChange={cityChange} /> )}
+      {cities.map((city) => <CityItem key={city.name} stateCity={stateCity} city={city} changeCity={changeCity} /> )}
     </ul>
   );
 }
 
 CitiesList.propTypes = {
   stateCity: cityProp,
-  cityChange: PropTypes.func.isRequired,
+  changeCity: PropTypes.func.isRequired,
 };
 
 export default CitiesList;

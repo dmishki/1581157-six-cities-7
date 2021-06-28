@@ -1,21 +1,22 @@
-import { City } from '../const';
+import { City, Sort } from '../const';
 import { ActionType } from './action';
 
 const initialState = {
   city: City.PARIS,
+  sort: Sort.POPULAR,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.CITY_CHANGE:
+    case ActionType.CHANGE_CITY:
       return {
         ...state,
         city: action.payload,
       };
-    case ActionType.LIST_FILLING:
+    case ActionType.CHANGE_SORT:
       return {
         ...state,
-        mistakes: state.mistakes + action.payload,
+        sort: action.payload,
       };
     default:
       return state;
