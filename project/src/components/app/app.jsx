@@ -11,10 +11,12 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import { City } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../auth';
+import cityProp from '../props/city.prop';
+import PrivateRoute from '../private-route/private-route';
 
 function App(props) {
   const [activeCard, setActiveCard] = useState(1);
-  const {authorizationStatus, isDataLoaded, offers, reviews} = props;
+  const { authorizationStatus, isDataLoaded, reviews, city, offers } = props;
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -34,11 +36,14 @@ function App(props) {
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
-          <Login />
+          <Login city={city} />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <Favorites offers={offers} />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <Favorites offers={offers} />}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.OFFER}>
           <Room
             reviews={reviews}
@@ -57,6 +62,7 @@ function App(props) {
 }
 
 App.propTypes = {
+  city: cityProp,
   offers: PropTypes.array,
   reviews: PropTypes.array,
   authorizationStatus: PropTypes.string.isRequired,
@@ -64,9 +70,10 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers,
   authorizationStatus: state.authorizationStatus,
   isDataLoaded: state.isDataLoaded,
-
 });
 
 export {App};

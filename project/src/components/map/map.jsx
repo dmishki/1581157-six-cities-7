@@ -19,7 +19,7 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function Map(props) {
-  const {activeCard, offers, city } = props;
+  const { activeCard, offers, city } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -30,7 +30,7 @@ function Map(props) {
       markers.addTo(map);
 
       offers.forEach((offer) => {
-        const { latitude, longitude } = offer.city.location;
+        const { latitude, longitude } = offer.location;
         const offerCords = [latitude, longitude];
 
         leaflet
