@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../main/main';
@@ -8,10 +9,18 @@ import Favorites from '../favorites/favorites';
 import Room from '../room/room';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { City } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { isCheckedAuth } from '../../auth';
 
 function App(props) {
   const [activeCard, setActiveCard] = useState(1);
-  const { offers, reviews } = props;
+  const {authorizationStatus, isDataLoaded, offers, reviews} = props;
+
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -50,6 +59,15 @@ function App(props) {
 App.propTypes = {
   offers: PropTypes.array,
   reviews: PropTypes.array,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  isDataLoaded: state.isDataLoaded,
+
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);
