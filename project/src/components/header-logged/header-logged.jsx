@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { logout } from '../../store/api-actions';
 import PropTypes from 'prop-types';
 
-function HeaderLogged({signOut}) {
-  const email = localStorage.getItem('email') ?? '';
+function HeaderLogged(props) {
+  const { userData, signOut } = props;
 
   return (
     <ul className="header__nav-list">
@@ -14,7 +14,7 @@ function HeaderLogged({signOut}) {
         <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
           <div className="header__avatar-wrapper user__avatar-wrapper">
           </div>
-          <span className="header__user-name user__name">{email}</span>
+          <span className="header__user-name user__name">{userData.email}</span>
         </Link>
       </li>
       <li className="header__nav-item">
@@ -27,8 +27,13 @@ function HeaderLogged({signOut}) {
 }
 
 HeaderLogged.propTypes = {
+  userData: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  userData: state.userData,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   signOut() {
@@ -37,4 +42,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {HeaderLogged};
-export default connect(null, mapDispatchToProps)(HeaderLogged);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderLogged);

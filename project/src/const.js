@@ -58,9 +58,11 @@ export const AuthorizationStatus = {
 };
 
 export const APIRoute = {
-  HOTELS: '/hotels',
+  HOTELS: '/hotels/',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  COMMENTS: '/comments/',
+  NEARBY: '/nearby',
 };
 
 export const URL_MARKER_DEFAULT = 'img/pin.svg';

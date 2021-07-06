@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import Header from '../header/header';
 import ProLabel from '../pro-label/pro-label';
@@ -9,12 +9,18 @@ import PropTypes from 'prop-types';
 import { calculateRatingWidth } from '../../helpers';
 import cityProp from '../props/city.prop';
 import OffersList from '../offers-list/offers-list';
+import { fetchCommentsList, fetchNearbyOffers } from '../../store/api-actions';
+import { connect } from 'react-redux';
 
 function Room(props) {
   const { id } = useParams();
-  const { offers = [], reviews, activeCard, setActiveCard, city } = props;
+  const { offers = [], comments, activeCard, setActiveCard, city, loadComments, nearbyOffers, loadNearbyOffers } = props;
   const offer = offers.find((item) => Number(item.id) === Number(id));
-  const offersNearby = offers.filter((item) => Number(item.id) !== Number(id));
+
+  useEffect(() => {
+    loadComments(id);
+    loadNearbyOffers(id);
+  }, [loadComments, loadNearbyOffers, id]);
 
   if (!offer) {
     return <Redirect to='/not-found'/>;
@@ -117,12 +123,12 @@ function Room(props) {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={reviews} />
+              <Reviews reviews={comments} />
             </div>
           </div>
           <section className="property__map map">
             <Map
-              offers={offersNearby}
+              offers={nearbyOffers}
               activeCard={activeCard}
               city={city}
             />
@@ -133,7 +139,7 @@ function Room(props) {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               <OffersList
-                offers={offersNearby}
+                offers={nearbyOffers}
                 activeCard={activeCard}
                 setActiveCard={setActiveCard}
               />
@@ -146,11 +152,29 @@ function Room(props) {
 }
 
 Room.propTypes = {
+  comments: PropTypes.array,
   setActiveCard: PropTypes.func,
   activeCard: PropTypes.number,
   city: cityProp,
   offers: PropTypes.array,
-  reviews: PropTypes.array,
+  nearbyOffers: PropTypes.array,
+  loadComments: PropTypes.func.isRequired,
+  loadNearbyOffers: PropTypes.func.isRequired,
 };
 
-export default Room;
+const mapStateToProps = (state) => ({
+  comments: state.comments,
+  nearbyOffers: state.nearbyOffers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadComments(id) {
+    dispatch(fetchCommentsList(id));
+  },
+  loadNearbyOffers(id) {
+    dispatch(fetchNearbyOffers(id));
+  },
+});
+
+export {Room};
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

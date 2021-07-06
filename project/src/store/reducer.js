@@ -5,6 +5,9 @@ const initialState = {
   city: City.PARIS,
   sort: Sort.POPULAR,
   offers: [],
+  comments: [],
+  userData: {},
+  nearbyOffers: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
 };
@@ -21,11 +24,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         sort: action.payload,
       };
+    case ActionType.GET_LOGIN:
+      return {
+        ...state,
+        userData: action.payload,
+      };
     case ActionType.LOAD_OFFERS:
       return {
         ...state,
         offers: action.payload,
         isDataLoaded: true,
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+    case ActionType.LOAD_NEARBY_OFFERS:
+      return {
+        ...state,
+        nearbyOffers: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -36,6 +54,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+        userData: {},
       };
     default:
       return state;
