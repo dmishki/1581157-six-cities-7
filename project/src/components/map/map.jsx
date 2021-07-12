@@ -19,34 +19,35 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function Map(props) {
-  const {activeCard, offers, city } = props;
+  const { activeCard, offers, city } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     const markers = leaflet.layerGroup();
+    if (Array.isArray(offers) && offers.length > 0) {
+      if (map) {
+        markers.addTo(map);
 
-    if (map) {
-      markers.addTo(map);
+        offers.forEach((offer) => {
+          const { latitude, longitude } = offer.location;
+          const offerCords = [latitude, longitude];
 
-      offers.forEach((offer) => {
-        const { latitude, longitude } = offer.city.location;
-        const offerCords = [latitude, longitude];
+          leaflet
+            .marker(offerCords,
+              {
+                icon: (offer.id === activeCard)
+                  ? currentCustomIcon
+                  : defaultCustomIcon,
+              })
+            .addTo(markers);
+        });
 
-        leaflet
-          .marker(offerCords,
-            {
-              icon: (offer.id === activeCard)
-                ? currentCustomIcon
-                : defaultCustomIcon,
-            })
-          .addTo(markers);
-      });
-
-      map.flyTo(
-        [offers[0].city.location.latitude, offers[0].city.location.longitude],
-        offers[0].city.location.zoom,
-      );
+        map.flyTo(
+          [offers[0].city.location.latitude, offers[0].city.location.longitude],
+          offers[0].city.location.zoom,
+        );
+      }
     }
 
     return () => {

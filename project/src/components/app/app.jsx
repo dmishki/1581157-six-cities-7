@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../main/main';
@@ -8,10 +9,20 @@ import Favorites from '../favorites/favorites';
 import Room from '../room/room';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { City } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { isCheckedAuth } from '../../auth';
+import cityProp from '../props/city.prop';
+import PrivateRoute from '../private-route/private-route';
 
 function App(props) {
   const [activeCard, setActiveCard] = useState(1);
-  const { offers, reviews } = props;
+  const { authorizationStatus, isDataLoaded, reviews, city, offers } = props;
+
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -25,11 +36,14 @@ function App(props) {
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
-          <Login />
+          <Login city={city} />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <Favorites offers={offers} />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <Favorites offers={offers} />}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.OFFER}>
           <Room
             reviews={reviews}
@@ -48,8 +62,19 @@ function App(props) {
 }
 
 App.propTypes = {
+  city: cityProp,
   offers: PropTypes.array,
   reviews: PropTypes.array,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers,
+  authorizationStatus: state.authorizationStatus,
+  isDataLoaded: state.isDataLoaded,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);

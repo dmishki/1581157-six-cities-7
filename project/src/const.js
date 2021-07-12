@@ -51,6 +51,20 @@ export const Sort = {
   TOP: 'Top rated first',
 };
 
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  HOTELS: '/hotels/',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  COMMENTS: '/comments/',
+  NEARBY: '/nearby',
+};
+
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';

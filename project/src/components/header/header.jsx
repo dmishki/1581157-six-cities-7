@@ -1,7 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { AuthorizationStatus } from '../../const';
+import HeaderLogged from '../header-logged/header-logged';
+import HeaderUnlogged from '../header-unlogged/header-unlogged';
 
-function Header() {
+function Header({authorizationStatus}) {
 
   return (
     <header className="header">
@@ -13,15 +18,7 @@ function Header() {
             </Link>
           </div>
           <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <Link className="header__nav-link header__nav-link--profile" to="/login">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__login">Sign in</span>
-                </Link>
-              </li>
-            </ul>
+            {authorizationStatus === AuthorizationStatus.AUTH ? <HeaderLogged /> : <HeaderUnlogged />}
           </nav>
         </div>
       </div>
@@ -29,4 +26,13 @@ function Header() {
   );
 }
 
-export default Header;
+Header.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+
+export {Header};
+export default connect(mapStateToProps, null)(Header);
