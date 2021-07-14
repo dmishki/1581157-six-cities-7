@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../main/main';
@@ -11,12 +10,18 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import { City } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../auth';
-import cityProp from '../props/city.prop';
 import PrivateRoute from '../private-route/private-route';
+import { getCity } from '../../store/cities/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getIsDataLoaded, getOffers } from '../../store/data/selectors';
 
-function App(props) {
+function App() {
   const [activeCard, setActiveCard] = useState(1);
-  const { authorizationStatus, isDataLoaded, reviews, city, offers } = props;
+
+  const city = useSelector(getCity);
+  const offers = useSelector(getOffers);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getIsDataLoaded);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -46,7 +51,6 @@ function App(props) {
         </PrivateRoute>
         <Route exact path={AppRoute.OFFER}>
           <Room
-            reviews={reviews}
             offers={offers}
             activeCard={activeCard}
             setActiveCard={setActiveCard}
@@ -61,20 +65,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  city: cityProp,
-  offers: PropTypes.array,
-  reviews: PropTypes.array,
-  authorizationStatus: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
-  authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
-});
-
-export {App};
-export default connect(mapStateToProps, null)(App);
+export default App;

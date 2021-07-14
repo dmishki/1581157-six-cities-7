@@ -1,23 +1,26 @@
 import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postComment } from '../../store/api-actions';
 
-function ReviewsForm({onSubmit}) {
+function ReviewsForm() {
   const [selectedRating, setSelectedRating] = useState();
   const { id } = useParams();
   const textRef = useRef();
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(postComment({
       comment: textRef.current.value,
       rating: selectedRating,
       id: id,
-    });
+    }));
+
     setSelectedRating(0);
+    textRef.current.value = '';
   };
 
   const handleRatingChange = (evt) => {
@@ -90,16 +93,4 @@ function ReviewsForm({onSubmit}) {
   );
 }
 
-ReviewsForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(commentData) {
-    dispatch(postComment(commentData));
-  },
-});
-
-export {ReviewsForm};
-export default connect(null, mapDispatchToProps)(ReviewsForm);
-
+export default ReviewsForm;

@@ -1,15 +1,17 @@
 import React from 'react';
 import Header from '../header/header';
 import PropTypes from 'prop-types';
-import cityProp from '../props/city.prop';
 import CitiesList from '../cities-list/cities-list';
-import { ActionCreator } from '../../store/action';
-import { connect } from 'react-redux';
+import { changeCity } from '../../store/action';
+import { connect, useSelector } from 'react-redux';
 import MainWithOffers from '../main-with-offers/main-with-offers';
 import MainEmpty from '../main-empty/main-empty';
+import { getCity } from '../../store/cities/selectors';
 
 function Main(props) {
-  const { setActiveCard, activeCard, offers, stateCity, changeCity } = props;
+  const { setActiveCard, activeCard, offers, onChangeCity } = props;
+
+  const stateCity = useSelector(getCity);
 
   const activeOffers = offers.filter((offer) => offer.city.name === stateCity.name);
 
@@ -22,7 +24,7 @@ function Main(props) {
           <section className="locations container">
             <CitiesList
               stateCity={stateCity}
-              changeCity={changeCity}
+              changeCity={onChangeCity}
             />
           </section>
         </div>
@@ -38,21 +40,16 @@ function Main(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  stateCity: state.city,
-});
-
 const mapDispatchToProps = {
-  changeCity: ActionCreator.changeCity,
+  onChangeCity: changeCity,
 };
 
 Main.propTypes = {
-  stateCity: cityProp,
-  changeCity: PropTypes.func.isRequired,
+  onChangeCity: PropTypes.func.isRequired,
   activeCard: PropTypes.number,
   setActiveCard: PropTypes.func,
   offers: PropTypes.array,
 };
 
 export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(null, mapDispatchToProps)(Main);

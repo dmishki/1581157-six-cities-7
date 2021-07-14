@@ -1,16 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import Sorting from '../sorting/sorting';
 import cityProp from '../props/city.prop';
-import { ActionCreator } from '../../store/action';
+import { changeSort } from '../../store/action';
 import { sortOffers } from '../../sort';
+import { getSort } from '../../store/sort/selectors';
 
 function MainWithOffers(props) {
-  const { activeOffers, activeCard, setActiveCard, stateCity, stateSort, changeSort } = props;
+  const { activeOffers, activeCard, setActiveCard, stateCity, onChangeSort } = props;
 
+  const stateSort = useSelector(getSort);
   const sortedOffers = sortOffers(stateSort, activeOffers);
 
   return (
@@ -21,7 +23,7 @@ function MainWithOffers(props) {
           <b className="places__found">{activeOffers.length} places to stay in {stateCity.name}</b>
           <Sorting
             stateSort={stateSort}
-            changeSort={changeSort}
+            changeSort={onChangeSort}
           />
           <div className="cities__places-list places__list tabs__content">
             <OffersList
@@ -45,22 +47,17 @@ function MainWithOffers(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  stateSort: state.sort,
-});
-
 const mapDispatchToProps = {
-  changeSort: ActionCreator.changeSort,
+  onChangeSort: changeSort,
 };
 
 MainWithOffers.propTypes = {
   stateCity: cityProp,
-  stateSort: PropTypes.string,
-  changeSort: PropTypes.func,
+  onChangeSort: PropTypes.func,
   activeCard: PropTypes.number,
   setActiveCard: PropTypes.func,
   activeOffers: PropTypes.array,
 };
 
 export {MainWithOffers};
-export default connect(mapStateToProps, mapDispatchToProps)(MainWithOffers);
+export default connect(null, mapDispatchToProps)(MainWithOffers);

@@ -1,14 +1,14 @@
 import React, {useRef} from 'react';
 import Header from '../header/header';
 import {useHistory} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {login} from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import cityProp from '../props/city.prop';
 
-function Login(props) {
-  const { city, onSubmit } = props;
+function Login({city}) {
+
+  const dispatch = useDispatch();
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -18,10 +18,10 @@ function Login(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
 
     history.push(AppRoute.MAIN);
   };
@@ -65,14 +65,6 @@ function Login(props) {
 
 Login.propTypes = {
   city: cityProp,
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-});
-
-export {Login};
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

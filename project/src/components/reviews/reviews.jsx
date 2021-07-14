@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Review from '../review/review';
 import ReviewsForm from '../reviews-form/reviews-form';
 import { AuthorizationStatus } from '../../const';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
-function Reviews(props) {
-  const { reviews, authorizationStatus } = props;
+function Reviews({reviews}) {
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <section className="property__reviews reviews">
@@ -21,12 +23,6 @@ function Reviews(props) {
 
 Reviews.propTypes = {
   reviews: PropTypes.array,
-  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-export {Reviews};
-export default connect(mapStateToProps, null)(Reviews);
+export default Reviews;
