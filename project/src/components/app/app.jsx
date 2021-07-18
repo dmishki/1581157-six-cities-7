@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
@@ -14,6 +14,7 @@ import PrivateRoute from '../private-route/private-route';
 import { getCity } from '../../store/cities/selectors';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getIsDataLoaded, getOffers } from '../../store/data/selectors';
+import browserHistory from '../../browser-history';
 
 function App() {
   const [activeCard, setActiveCard] = useState(1);
@@ -30,7 +31,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <Main

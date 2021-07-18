@@ -11,3 +11,5 @@ export const getComment = (state) => state[NameSpace.DATA].comment;
 export const getNearbyOffers = (state) => state[NameSpace.DATA].nearbyOffers;
 
 export const getIsDataLoaded = (state) => state[NameSpace.DATA].isDataLoaded;
+
+export const getFavoriteOffers = (state) => state[NameSpace.DATA].favorites;

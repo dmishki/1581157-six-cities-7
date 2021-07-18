@@ -5,11 +5,14 @@ export const ActionType = {
   CHANGE_SORT: 'sort/changeSort',
   GET_LOGIN: 'data/getLogin',
   LOAD_OFFERS: 'data/loadOffers',
+  LOAD_FAVORITES: 'data/loadFavorites',
   LOAD_COMMENTS: 'data/loadComments',
   POST_COMMENT: 'data/postComment',
+  SET_FAVORITE_ITEM: 'data/setFavoriteItem',
   LOAD_NEARBY_OFFERS: 'data/loadNearbyOffers',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTE: 'route/redirectToRoute',
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
@@ -28,12 +31,20 @@ export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
   payload: offers,
 }));
 
+export const loadFavorites = createAction(ActionType.LOAD_FAVORITES, (favorites) => ({
+  payload: favorites,
+}));
+
 export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => ({
   payload: comments,
 }));
 
 export const postComment = createAction(ActionType.POST_COMMENT, (comment) => ({
   payload: comment,
+}));
+
+export const setFavoriteItem = createAction(ActionType.SET_FAVORITE_ITEM, (favoriteItem) => ({
+  payload: favoriteItem,
 }));
 
 export const loadNearbyOffers = createAction(ActionType.LOAD_NEARBY_OFFERS, (nearbyOffers) => ({
@@ -45,3 +56,7 @@ export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATI
 }));
 
 export const logout = createAction(ActionType.LOGOUT);
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));

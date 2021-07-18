@@ -1,11 +1,20 @@
-import { loadOffers, loadComments, loadNearbyOffers, requireAuthorization, getLogin, logout as signOut } from './action';
+import { loadOffers, loadComments, loadNearbyOffers, requireAuthorization, getLogin, logout as signOut, loadFavorites, setFavoriteItem } from './action';
 import { AuthorizationStatus, APIRoute } from '../const';
 import { adaptOffersToClient, adaptCommentsToClient, adaptUserDataToClient } from '../adapters';
+import { NameSpace } from './root-reducer';
+import { AppRoute } from '../const';
+import { redirectToRoute } from './action';
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
     .then(({ data }) => data.map((offer) => adaptOffersToClient(offer)))
     .then((offers) => dispatch(loadOffers(offers)))
+);
+
+export const fetchFavoritesList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITES)
+    .then(({ data }) => data.map((offer) => adaptOffersToClient(offer)))
+    .then((offers) => dispatch(loadFavorites(offers)))
 );
 
 export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
@@ -43,6 +52,18 @@ export const postComment = ({ comment, rating, id }) => (dispatch, _getState, ap
     .then(({ data }) => data.map((item) => adaptCommentsToClient(item)))
     .then((comments) => dispatch(loadComments(comments)))
 );
+
+export const postFavoriteStatus = ({ isFavoriteStatus, id }) => (dispatch, _getState, api) => {
+  const authStatus = _getState()[NameSpace.USER].authorizationStatus;
+
+  if (authStatus !== AuthorizationStatus.AUTH) {
+    dispatch(redirectToRoute(AppRoute.LOGIN));
+  } else {
+    api.post(APIRoute.FAVORITES + id + APIRoute.SLASH + isFavoriteStatus)
+      .then(({ data }) => adaptOffersToClient(data))
+      .then((offer) => dispatch(setFavoriteItem(offer)));
+  }
+};
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)

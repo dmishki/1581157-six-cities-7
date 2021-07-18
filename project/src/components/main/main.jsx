@@ -34,7 +34,7 @@ function Main(props) {
             activeCard={activeCard}
             activeOffers={activeOffers}
             stateCity={stateCity}
-          /> : <MainEmpty />}
+          /> : <MainEmpty stateCity={stateCity} />}
       </main>
     </div>
   );
