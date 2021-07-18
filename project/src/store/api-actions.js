@@ -67,8 +67,6 @@ export const postFavoriteStatus = ({ isFavoriteStatus, id }) => (dispatch, _getS
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
-    .then(() => {
-      localStorage.removeItem('token');
-    })
+    .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(signOut()))
 );
