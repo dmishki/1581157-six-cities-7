@@ -20,7 +20,7 @@ function App(props) {
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
-      <LoadingScreen />
+      <LoadingScreen  />
     );
   }
 
