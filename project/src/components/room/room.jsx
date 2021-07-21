@@ -10,17 +10,22 @@ import { calculateRatingWidth } from '../../helpers';
 import cityProp from '../props/city.prop';
 import OffersList from '../offers-list/offers-list';
 import { fetchCommentsList, fetchNearbyOffers } from '../../store/api-actions';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getComments, getNearbyOffers } from '../../store/data/selectors';
 
 function Room(props) {
   const { id } = useParams();
-  const { offers = [], comments, activeCard, setActiveCard, city, loadComments, nearbyOffers, loadNearbyOffers } = props;
+  const { offers = [], activeCard, setActiveCard, city } = props;
   const offer = offers.find((item) => Number(item.id) === Number(id));
 
+  const dispatch = useDispatch();
+  const comments = useSelector(getComments);
+  const nearbyOffers = useSelector(getNearbyOffers);
+
   useEffect(() => {
-    loadComments(id);
-    loadNearbyOffers(id);
-  }, [loadComments, loadNearbyOffers, id]);
+    dispatch(fetchCommentsList(id));
+    dispatch(fetchNearbyOffers(id));
+  }, [dispatch, id]);
 
   if (!offer) {
     return <Redirect to='/not-found'/>;
@@ -152,29 +157,10 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  comments: PropTypes.array,
   setActiveCard: PropTypes.func,
   activeCard: PropTypes.number,
   city: cityProp,
   offers: PropTypes.array,
-  nearbyOffers: PropTypes.array,
-  loadComments: PropTypes.func.isRequired,
-  loadNearbyOffers: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  comments: state.comments,
-  nearbyOffers: state.nearbyOffers,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadComments(id) {
-    dispatch(fetchCommentsList(id));
-  },
-  loadNearbyOffers(id) {
-    dispatch(fetchNearbyOffers(id));
-  },
-});
-
-export {Room};
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default Room;
