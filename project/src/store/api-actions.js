@@ -1,9 +1,28 @@
-import { loadOffers, loadComments, loadNearbyOffers, requireAuthorization, getLogin, logout as signOut, loadFavorites, setFavoriteItem } from './action';
-import { AuthorizationStatus, APIRoute } from '../const';
+import { loadOffers, loadComments, loadNearbyOffers, requireAuthorization, getLogin, logout as signOut, loadFavorites, setFavoriteItem, commentSending } from './action';
+import { AuthorizationStatus, APIRoute, CommentStatus } from '../const';
 import { adaptOffersToClient, adaptCommentsToClient, adaptUserDataToClient } from '../adapters';
 import { NameSpace } from './root-reducer';
 import { AppRoute } from '../const';
 import { redirectToRoute } from './action';
+
+export const checkAuth = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.LOGIN)
+    .then(({ data }) => adaptUserDataToClient(data))
+    .then((userData) => dispatch(getLogin(userData)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => {})
+);
+
+export const login = ({ login: email, password }) => (dispatch, _getState, api) => (
+  api.post(APIRoute.LOGIN, { email, password })
+    .then(({ data }) => adaptUserDataToClient(data))
+    .then((userData) => {
+      dispatch(getLogin(userData));
+      localStorage.setItem('token', userData.token);
+    })
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
+);
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
@@ -29,28 +48,14 @@ export const fetchNearbyOffers = (id) => (dispatch, _getState, api) => (
     .then(( offers ) => dispatch(loadNearbyOffers(offers)))
 );
 
-export const checkAuth = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.LOGIN)
-    .then(({ data }) => adaptUserDataToClient(data))
-    .then((userData) => dispatch(getLogin(userData)))
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
-);
-
-export const login = ({ login: email, password }) => (dispatch, _getState, api) => (
-  api.post(APIRoute.LOGIN, { email, password })
-    .then(({ data }) => adaptUserDataToClient(data))
-    .then((userData) => {
-      dispatch(getLogin(userData));
-      localStorage.setItem('token', userData.token);
-    })
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-);
-
 export const postComment = ({ comment, rating, id }) => (dispatch, _getState, api) => (
   api.post(APIRoute.COMMENTS + id, { comment, rating })
-    .then(({ data }) => data.map((item) => adaptCommentsToClient(item)))
-    .then((comments) => dispatch(loadComments(comments)))
+    .then(({ data }) => data.map((item) =>  adaptCommentsToClient(item)))
+    .then((comments) => {
+      dispatch(loadComments(comments));
+      dispatch(commentSending(CommentStatus.SENT));
+    })
+    .catch(() => dispatch(commentSending(CommentStatus.FAILED)))
 );
 
 export const postFavoriteStatus = ({ isFavoriteStatus, id }) => (dispatch, _getState, api) => {

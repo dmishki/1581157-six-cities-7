@@ -1,4 +1,5 @@
 import { Sort } from './const';
+import dayjs from 'dayjs';
 
 export const sortOffers = (sort, offers) => {
   switch (sort) {
@@ -12,3 +13,6 @@ export const sortOffers = (sort, offers) => {
       return offers;
   }
 };
+
+export const sortReviews = (reviews) => Array.from(reviews)
+  .sort((a, b) => dayjs(b.date).format('YYYYMMDDHHmmss') - dayjs(a.date).format('YYYYMMDDHHmmss'));

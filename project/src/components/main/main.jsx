@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import MainWithOffers from '../main-with-offers/main-with-offers';
 import MainEmpty from '../main-empty/main-empty';
 import { getCity } from '../../store/cities/selectors';
+import { getOffers } from '../../store/data/selectors';
 
 function Main(props) {
-  const { setActiveCard, activeCard, offers } = props;
+  const { setActiveCard, activeCard } = props;
 
+  const offers = useSelector(getOffers);
   const stateCity = useSelector(getCity);
   const dispatch = useDispatch();
 
@@ -35,7 +37,7 @@ function Main(props) {
             activeCard={activeCard}
             activeOffers={activeOffers}
             stateCity={stateCity}
-          /> : <MainEmpty stateCity={stateCity} />}
+          /> : <MainEmpty />}
       </main>
     </div>
   );
@@ -44,7 +46,6 @@ function Main(props) {
 Main.propTypes = {
   activeCard: PropTypes.number,
   setActiveCard: PropTypes.func,
-  offers: PropTypes.array,
 };
 
 export default Main;

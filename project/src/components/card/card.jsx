@@ -5,6 +5,7 @@ import cardProp from './card.prop.js';
 import { calculateRatingWidth } from '../../helpers.js';
 import { useDispatch } from 'react-redux';
 import { postFavoriteStatus } from '../../store/api-actions.js';
+import PremiumCardLabel from '../premium-card-label/premium-card-label.jsx';
 
 function Card(props) {
   const { activeCard, setActiveCard, offer } = props;
@@ -13,6 +14,7 @@ function Card(props) {
     previewImage,
     type,
     isFavorite,
+    isPremium,
     title,
     rating } = offer;
 
@@ -38,6 +40,7 @@ function Card(props) {
     <article className="cities__place-card place-card"
       onMouseEnter={handleOnCardHover}
     >
+      { isPremium ? <PremiumCardLabel /> : '' }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={offerUrl}>
           <img className="place-card__image" src={previewImage} width="260" height="200" aria-hidden alt="Place image" />
