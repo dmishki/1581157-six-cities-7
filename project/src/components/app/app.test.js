@@ -93,11 +93,18 @@ describe('Application Routing', () => {
     );
   });
 
+  it('should render "Main" when user navigate to "/"', () => {
+    history.push(AppRoute.MAIN);
+    render(fakeApp);
+
+    expect(screen.getByText(/places to stay/i)).toBeInTheDocument();
+  });
+
   it('should render "Login" when user navigate to "/login"', () => {
     history.push(AppRoute.LOGIN);
     render(fakeApp);
 
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByText(/places to stay/i)).toBeInTheDocument();
   });
 
   it('should render "Favorites" when user navigate to "/favorites"', () => {

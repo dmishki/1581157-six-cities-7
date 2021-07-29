@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postComment } from '../../store/api-actions';
@@ -10,6 +10,7 @@ function ReviewsForm() {
   const [selectedRating, setSelectedRating] = useState();
   const [text, setText] = useState('');
   const { id } = useParams();
+  const textRef = useRef();
 
   const dispatch = useDispatch();
   const commentStatus = useSelector(getCommentStatus);
@@ -36,6 +37,12 @@ function ReviewsForm() {
   const handleRatingChange = (rating) => () => {
     setSelectedRating(rating);
   };
+
+  if (commentStatus === CommentStatus.SENT) {
+    document.querySelectorAll('.form__rating-input').forEach((input) => input.checked = false);
+    textRef.current.value = '';
+    dispatch(commentSending(CommentStatus.UNKNOWN));
+  }
 
   const isReadyToSubmit = selectedRating && ((text && text.length) >= 50 && (text && text.length) <= 300);
 
@@ -98,6 +105,7 @@ function ReviewsForm() {
       <textarea
         className="reviews__textarea form__textarea" id="review" name="review" minLength="50" placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={onTextHandler}
+        ref={textRef}
         disabled={commentStatus === CommentStatus.SENDING}
       >
       </textarea>

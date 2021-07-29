@@ -1,5 +1,6 @@
 import { data } from './data';
 import {ActionType} from '../action';
+import { CommentStatus } from '../../const';
 
 describe('Reducer: data', () => {
   it('without additional parameters should return initial state', () => {
@@ -11,6 +12,7 @@ describe('Reducer: data', () => {
         nearbyOffers: [],
         favorites: [],
         isDataLoaded: false,
+        commentStatus: CommentStatus.UNKNOWN,
       });
   });
 

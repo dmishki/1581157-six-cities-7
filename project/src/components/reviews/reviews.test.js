@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { createMemoryHistory } from 'history';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, CommentStatus } from '../../const';
 
 const mockStore = configureStore({});
 const history = createMemoryHistory();
@@ -31,6 +31,9 @@ describe('Component: Reviews', () => {
       <Provider store={mockStore({
         USER: {
           authorizationStatus: AuthorizationStatus.AUTH,
+        },
+        DATA: {
+          commentStatus: CommentStatus.UNKNOWN,
         },
       })}
       >
