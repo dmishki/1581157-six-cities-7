@@ -10,6 +10,7 @@ export const ActionType = {
   POST_COMMENT: 'data/postComment',
   SET_FAVORITE_ITEM: 'data/setFavoriteItem',
   LOAD_NEARBY_OFFERS: 'data/loadNearbyOffers',
+  COMMENT_SENDING: 'data/commentSending',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'route/redirectToRoute',
@@ -55,8 +56,12 @@ export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATI
   payload: status,
 }));
 
-export const logout = createAction(ActionType.LOGOUT);
+export const commentSending = createAction(ActionType.COMMENT_SENDING, (status) => ({
+  payload: status,
+}));
 
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
 }));
+
+export const logout = createAction(ActionType.LOGOUT);

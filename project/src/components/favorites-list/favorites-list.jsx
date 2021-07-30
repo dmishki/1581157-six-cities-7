@@ -1,26 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FavoriteCard from '../favorite-card/favorite-card';
+import FavoritesLocationItem from '../favorites-location-item/favorites-location-item';
+import groupBy from 'lodash/groupBy';
 
-function FavoritesList(props) {
-  const { favoriteOffers } = props;
+function FavoritesList({favoriteOffers}) {
+  const favorites = groupBy(favoriteOffers, 'city.name');
 
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
-            </div>
-          </div>
-          <div className="favorites__places">
-            {favoriteOffers.map((offer) => <FavoriteCard offer={offer} key={offer.id} />)}
-          </div>
-        </li>
+        {Object.entries(favorites).map(([cityName, offers]) => <FavoritesLocationItem key={cityName} cityName={cityName} offers={offers} /> ) }
       </ul>
     </section>
   );
@@ -29,6 +19,5 @@ function FavoritesList(props) {
 FavoritesList.propTypes = {
   favoriteOffers: PropTypes.array,
 };
-
 
 export default FavoritesList;

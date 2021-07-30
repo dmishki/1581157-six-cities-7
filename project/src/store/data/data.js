@@ -1,5 +1,6 @@
-import { getLogin, loadOffers, loadComments, postComment, loadNearbyOffers, loadFavorites, setFavoriteItem } from '../action';
+import { getLogin, loadOffers, loadComments, postComment, loadNearbyOffers, loadFavorites, setFavoriteItem, commentSending } from '../action';
 import { createReducer } from '@reduxjs/toolkit';
+import { CommentStatus } from '../../const';
 
 const initialState = {
   offers: [],
@@ -8,6 +9,7 @@ const initialState = {
   nearbyOffers: [],
   favorites: [],
   isDataLoaded: false,
+  commentStatus: CommentStatus.UNKNOWN,
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -24,6 +26,9 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
+    })
+    .addCase(commentSending, (state, action) => {
+      state.commentStatus = action.payload;
     })
     .addCase(postComment, (state, action) => {
       state.comment = action.payload;

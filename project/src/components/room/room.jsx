@@ -7,25 +7,37 @@ import Reviews from '../reviews/reviews';
 import Map from '../map/map';
 import PropTypes from 'prop-types';
 import { calculateRatingWidth } from '../../helpers';
-import cityProp from '../props/city.prop';
 import OffersList from '../offers-list/offers-list';
-import { fetchCommentsList, fetchNearbyOffers } from '../../store/api-actions';
+import { fetchCommentsList, fetchNearbyOffers, postFavoriteStatus } from '../../store/api-actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { getComments, getNearbyOffers } from '../../store/data/selectors';
+import { getComments, getNearbyOffers, getOffers } from '../../store/data/selectors';
+import { getCity } from '../../store/cities/selectors';
 
 function Room(props) {
   const { id } = useParams();
-  const { offers = [], activeCard, setActiveCard, city } = props;
-  const offer = offers.find((item) => Number(item.id) === Number(id));
+  const { activeCard, setActiveCard } = props;
 
   const dispatch = useDispatch();
+  const city = useSelector(getCity);
   const comments = useSelector(getComments);
   const nearbyOffers = useSelector(getNearbyOffers);
+  const offers = useSelector(getOffers);
+
+  const offer = offers.find((item) => Number(item.id) === Number(id));
 
   useEffect(() => {
-    dispatch(fetchCommentsList(id));
-    dispatch(fetchNearbyOffers(id));
-  }, [dispatch, id]);
+    if (offer) {
+      dispatch(fetchCommentsList(id));
+      dispatch(fetchNearbyOffers(id));
+    }
+  }, [dispatch, id, offer]);
+
+  const handleFavoriteButtonClick = (evt) => {
+    evt.preventDefault();
+
+    const isFavoriteStatus = isFavorite ? 0 : 1;
+    dispatch(postFavoriteStatus({ isFavoriteStatus, id }));
+  };
 
   if (!offer) {
     return <Redirect to='/not-found'/>;
@@ -69,7 +81,11 @@ function Room(props) {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'} type="button">
+                <button
+                  className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'}
+                  type="button"
+                  onClick={handleFavoriteButtonClick}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -159,8 +175,6 @@ function Room(props) {
 Room.propTypes = {
   setActiveCard: PropTypes.func,
   activeCard: PropTypes.number,
-  city: cityProp,
-  offers: PropTypes.array,
 };
 
 export default Room;

@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import reviewProp from './review.prop';
 import { calculateRatingWidth } from '../../helpers';
 
@@ -8,6 +9,7 @@ function Review(props) {
   const { comment,
     user,
     rating,
+    date,
   } = review;
 
   const {
@@ -37,7 +39,7 @@ function Review(props) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={dayjs(date).format('YYYY-MM-DD')}>{dayjs(date).format('MMMM YYYY')}</time>
       </div>
     </li>
   );

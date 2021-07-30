@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { postFavoriteStatus } from '../../store/api-actions';
 import cardProp from '../card/card.prop';
@@ -12,6 +13,7 @@ function FavoriteCard(props) {
     title,
     isFavorite } = offer;
 
+  const offerUrl = `/offer/${id}`;
   const dispatch = useDispatch();
 
   const handleFavoriteButtonClick = (evt) => {
@@ -21,13 +23,12 @@ function FavoriteCard(props) {
     dispatch(postFavoriteStatus({ isFavoriteStatus, id }));
   };
 
-
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to={offerUrl}>
           <img className="place-card__image" src={previewImage} width="150" height="110" aria-hidden alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">

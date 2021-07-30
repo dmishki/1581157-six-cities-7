@@ -1,5 +1,5 @@
 export const calculateRatingWidth = (rating) => {
-  const integer = Math.floor(rating);
+  const integer = Math.round(rating);
   switch (integer) {
     case 5:
       return '100%';
