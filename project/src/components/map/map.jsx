@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import cityProp from '../props/city.prop';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [30, 30],
-  iconAnchor: [15, 30],
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [30, 30],
-  iconAnchor: [15, 30],
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 function Map(props) {

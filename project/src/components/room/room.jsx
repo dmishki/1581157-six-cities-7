@@ -5,7 +5,6 @@ import ProLabel from '../pro-label/pro-label';
 import PremiumLabel from '../premium-label/premium-label';
 import Reviews from '../reviews/reviews';
 import Map from '../map/map';
-import PropTypes from 'prop-types';
 import { calculateRatingWidth } from '../../helpers';
 import OffersList from '../offers-list/offers-list';
 import { fetchCommentsList, fetchNearbyOffers, postFavoriteStatus } from '../../store/api-actions';
@@ -13,9 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getComments, getNearbyOffers, getOffers } from '../../store/data/selectors';
 import { getCity } from '../../store/cities/selectors';
 
-function Room(props) {
+const MAX_IMAGES_COUNT = 6;
+
+function Room() {
   const { id } = useParams();
-  const { activeCard, setActiveCard } = props;
 
   const dispatch = useDispatch();
   const city = useSelector(getCity);
@@ -67,7 +67,7 @@ function Room(props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((imgUrl) => (
+              {images.slice(0, MAX_IMAGES_COUNT).map((imgUrl) => (
                 <div className="property__image-wrapper" key={imgUrl}>
                   <img className="property__image" src={imgUrl} aria-hidden alt="Photo studio" />
                 </div>
@@ -149,8 +149,8 @@ function Room(props) {
           </div>
           <section className="property__map map">
             <Map
-              offers={nearbyOffers}
-              activeCard={activeCard}
+              offers={[offer, ...nearbyOffers]}
+              activeCard={Number(id)}
               city={city}
             />
           </section>
@@ -161,8 +161,6 @@ function Room(props) {
             <div className="near-places__list places__list">
               <OffersList
                 offers={nearbyOffers}
-                activeCard={activeCard}
-                setActiveCard={setActiveCard}
               />
             </div>
           </section>
@@ -171,10 +169,5 @@ function Room(props) {
     </div>
   );
 }
-
-Room.propTypes = {
-  setActiveCard: PropTypes.func,
-  activeCard: PropTypes.number,
-};
 
 export default Room;

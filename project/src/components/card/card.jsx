@@ -31,7 +31,7 @@ function Card(props) {
   };
 
   const handleOnCardHover = () => {
-    if (id !== activeCard) {
+    if (setActiveCard && (id !== activeCard)) {
       setActiveCard(id);
     }
   };

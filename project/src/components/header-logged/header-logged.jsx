@@ -14,6 +14,7 @@ function HeaderLogged() {
       <li className="header__nav-item user">
         <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
           <div className="header__avatar-wrapper user__avatar-wrapper">
+            <img style={{ borderRadius: '50%' }} src={userData.avatarUrl} alt='User avatar' />
           </div>
           <span className="header__user-name user__name">{userData.email}</span>
         </Link>
