@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Sort } from '../../const';
 import SortingItem from '../sorting-item/sorting-item';
+import { getSort } from '../../store/sort/selectors';
+import { useSelector } from 'react-redux';
 
-function Sorting(props) {
+function Sorting({changeSort}) {
   const [isActive, setActive] = useState(false);
-
-  const { stateSort, changeSort } = props;
-
+  const stateSort = useSelector(getSort);
   const sort = Object.values(Sort);
 
   return (
@@ -31,7 +31,6 @@ function Sorting(props) {
 }
 
 Sorting.propTypes = {
-  stateSort: PropTypes.string,
   changeSort: PropTypes.func,
 };
 

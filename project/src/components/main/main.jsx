@@ -6,17 +6,13 @@ import { changeCity } from '../../store/action';
 import { useDispatch, useSelector } from 'react-redux';
 import MainWithOffers from '../main-with-offers/main-with-offers';
 import MainEmpty from '../main-empty/main-empty';
-import { getCity } from '../../store/cities/selectors';
-import { getOffers } from '../../store/data/selectors';
+import { getActiveOffers } from '../../store/data/selectors';
 
 function Main(props) {
   const { setActiveCard, activeCard } = props;
 
-  const offers = useSelector(getOffers);
-  const stateCity = useSelector(getCity);
+  const activeOffers = useSelector(getActiveOffers);
   const dispatch = useDispatch();
-
-  const activeOffers = offers.filter((offer) => offer.city.name === stateCity.name);
 
   return (
     <div className="page page--gray page--main">
@@ -26,7 +22,6 @@ function Main(props) {
         <div className="tabs">
           <section className="locations container">
             <CitiesList
-              stateCity={stateCity}
               changeCity={(city) => dispatch(changeCity(city))}
             />
           </section>
@@ -36,7 +31,6 @@ function Main(props) {
             setActiveCard={setActiveCard}
             activeCard={activeCard}
             activeOffers={activeOffers}
-            stateCity={stateCity}
           /> : <MainEmpty />}
       </main>
     </div>

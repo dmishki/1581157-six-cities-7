@@ -15,7 +15,12 @@ describe('Component: CityItem', () => {
 
   it('should render correctly', () => {
     const { getByRole } = render(
-      <Provider store={mockStore({})}>
+      <Provider store={mockStore({
+        CITIES: {
+          city: City.PARIS,
+        },
+      })}
+      >
         <Router history={history}>
           <CityItem changeCity={changeCity} city={City.PARIS} />
         </Router>

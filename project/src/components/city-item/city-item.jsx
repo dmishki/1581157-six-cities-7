@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cityProp from '../props/city.prop';
+import { useSelector } from 'react-redux';
+import { getCity } from '../../store/cities/selectors';
 
 function CityItem(props) {
-  const { city, stateCity, changeCity } = props;
+  const { city, changeCity } = props;
+  const stateCity = useSelector(getCity);
 
   return (
     <li className="locations__item">
@@ -20,7 +23,6 @@ function CityItem(props) {
 }
 
 CityItem.propTypes = {
-  stateCity: cityProp,
   city: cityProp,
   changeCity: PropTypes.func.isRequired,
 };

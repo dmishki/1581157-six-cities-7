@@ -9,7 +9,7 @@ import { calculateRatingWidth } from '../../helpers';
 import OffersList from '../offers-list/offers-list';
 import { fetchCommentsList, fetchNearbyOffers, postFavoriteStatus } from '../../store/api-actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { getComments, getNearbyOffers, getOffers } from '../../store/data/selectors';
+import { getNearbyOffers, getOffers } from '../../store/data/selectors';
 import { getCity } from '../../store/cities/selectors';
 
 const MAX_IMAGES_COUNT = 6;
@@ -19,7 +19,6 @@ function Room() {
 
   const dispatch = useDispatch();
   const city = useSelector(getCity);
-  const comments = useSelector(getComments);
   const nearbyOffers = useSelector(getNearbyOffers);
   const offers = useSelector(getOffers);
 
@@ -144,7 +143,7 @@ function Room() {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={comments} />
+              <Reviews />
             </div>
           </div>
           <section className="property__map map">

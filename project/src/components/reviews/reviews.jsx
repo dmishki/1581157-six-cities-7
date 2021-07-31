@@ -1,17 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Review from '../review/review';
 import ReviewsForm from '../reviews-form/reviews-form';
 import { AuthorizationStatus } from '../../const';
 import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
-import { sortReviews } from '../../sort';
+import { getSortedComments } from '../../store/data/selectors';
 
-const MAX_REVIEWS_COUNT = 10;
-
-function Reviews({reviews}) {
+function Reviews() {
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const sortedReviews = sortReviews(reviews).slice(0, MAX_REVIEWS_COUNT);
+  const sortedReviews = useSelector(getSortedComments);
 
   return (
     <section className="property__reviews reviews">
@@ -23,9 +20,5 @@ function Reviews({reviews}) {
     </section>
   );
 }
-
-Reviews.propTypes = {
-  reviews: PropTypes.array,
-};
 
 export default Reviews;

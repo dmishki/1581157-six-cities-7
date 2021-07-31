@@ -61,6 +61,12 @@ describe('Component: MainWithOffers', () => {
         SORT: {
           sort: Sort.POPULAR,
         },
+        CITIES: {
+          city: City.PARIS,
+        },
+        DATA: {
+          offers: [offer],
+        },
       })}
       >
         <Router history={history}>

@@ -13,7 +13,12 @@ describe('Component: Sorting', () => {
 
   it('should render correctly', () => {
     const { getByText } = render(
-      <Provider store={mockStore({})} >
+      <Provider store={mockStore({
+        SORT: {
+          sort: 'Popular',
+        },
+      })}
+      >
         <Router history={history}>
           <Sorting />
         </Router>

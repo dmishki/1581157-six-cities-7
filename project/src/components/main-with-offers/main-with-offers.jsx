@@ -4,16 +4,15 @@ import PropTypes from 'prop-types';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import Sorting from '../sorting/sorting';
-import cityProp from '../props/city.prop';
 import { changeSort } from '../../store/action';
-import { sortOffers } from '../../sort';
-import { getSort } from '../../store/sort/selectors';
+import { getCity } from '../../store/cities/selectors';
+import {  getSortedOffers } from '../../store/data/selectors';
 
 function MainWithOffers(props) {
-  const { activeOffers, activeCard, setActiveCard, stateCity, onChangeSort } = props;
+  const { activeOffers, activeCard, setActiveCard, onChangeSort } = props;
 
-  const stateSort = useSelector(getSort);
-  const sortedOffers = sortOffers(stateSort, activeOffers);
+  const stateCity = useSelector(getCity);
+  const sortedOffers = useSelector(getSortedOffers);
 
   return (
     <div className="cities">
@@ -22,7 +21,6 @@ function MainWithOffers(props) {
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{activeOffers.length} places to stay in {stateCity.name}</b>
           <Sorting
-            stateSort={stateSort}
             changeSort={onChangeSort}
           />
           <div className="cities__places-list places__list tabs__content">
@@ -52,7 +50,6 @@ const mapDispatchToProps = {
 };
 
 MainWithOffers.propTypes = {
-  stateCity: cityProp,
   onChangeSort: PropTypes.func,
   activeCard: PropTypes.number,
   setActiveCard: PropTypes.func,
