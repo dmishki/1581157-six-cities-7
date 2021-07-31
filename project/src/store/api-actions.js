@@ -1,5 +1,5 @@
-import { loadOffers, loadComments, loadNearbyOffers, requireAuthorization, getLogin, logout as signOut, loadFavorites, setFavoriteItem, commentSending } from './action';
-import { AuthorizationStatus, APIRoute, CommentStatus } from '../const';
+import { loadOffers, loadComments, loadNearbyOffers, requireAuthorization, getLogin, logout as signOut, loadFavorites, setFavoriteItem, commentLoading } from './action';
+import { AuthorizationStatus, APIRoute } from '../const';
 import { adaptOffersToClient, adaptCommentsToClient, adaptUserDataToClient } from '../adapters';
 import { NameSpace } from './root-reducer';
 import { AppRoute } from '../const';
@@ -63,17 +63,19 @@ export const fetchNearbyOffers = (id) => (dispatch, _getState, api) => (
     .catch(() => showErrorMessage())
 );
 
-export const postComment = ({ comment, rating, id }) => (dispatch, _getState, api) => (
-  api.post(APIRoute.COMMENTS + id, { comment, rating })
-    .then(({ data }) => data.map((item) => adaptCommentsToClient(item)))
-    .then((comments) => {
-      dispatch(loadComments(comments));
-      dispatch(commentSending(CommentStatus.SENT));
-    })
-    .catch(() =>{
-      dispatch(commentSending(CommentStatus.FAILED));
-      showErrorMessage();
-    }));
+export const postComment = ({ comment, rating, id }, onResetForm) => (dispatch, _getState, api) => {
+  dispatch(commentLoading(true));
+  return (
+    api.post(APIRoute.COMMENTS + id, { comment, rating })
+      .then(({ data }) => data.map((item) => adaptCommentsToClient(item)))
+      .then((comments) => {
+        dispatch(loadComments(comments));
+        onResetForm();
+      })
+      .catch(() => showErrorMessage())
+      .finally(() => dispatch(commentLoading(false)))
+  );
+};
 
 export const postFavoriteStatus = ({ isFavoriteStatus, id }) => (dispatch, _getState, api) => {
   const authStatus = _getState()[NameSpace.USER].authorizationStatus;

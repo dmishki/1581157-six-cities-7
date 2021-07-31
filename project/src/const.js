@@ -57,13 +57,6 @@ export const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN',
 };
 
-export const CommentStatus = {
-  UNKNOWN: 'UNKNOWN',
-  SENDING: 'SENDING',
-  SENT: 'SENT',
-  FAILED: 'FAILED',
-};
-
 export const APIRoute = {
   SLASH: '/',
   HOTELS: '/hotels/',

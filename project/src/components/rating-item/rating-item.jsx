@@ -9,7 +9,7 @@ function RatingItem(props) {
       <input className="form__rating-input visually-hidden" name="rating" value={rating} id={`${rating}-stars`} type="radio"
         onChange={onChangeHandler}
         disabled={isDisabled}
-        checked={Number(selectedRating) === Number(rating)}
+        checked={selectedRating === rating}
       />
       <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title={title}>
         <svg className="form__star-image" width="37" height="33">
